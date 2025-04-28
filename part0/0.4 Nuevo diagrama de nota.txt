@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server-->>browser: 302 Found - Save information
+    server-->>browser: Server responds (redirect to /notes)
+    deactivate server
+
+    browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML-code/document
+    deactivate server
+
+    browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server 
+    server-->>browser: main.css
+    deactivate server
+
+    browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: main.js
+    deactivate server
+
+    Note right of browser: browser starts executing js-code that requests JSON data from server
+
+    browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: Updated notes in JSON format (including the new note)
+    deactivate server
+
+    Note right of browser: browser executes the event handler that renders all notes to display
